@@ -169,11 +169,71 @@
 ## Jawaban Soal Tugas 8
 
 ### Jelaskan perbedaan antara Navigator.push() dan Navigator.pushReplacement(), disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!
+- Navigator.push() dapat digunakan untuk menambahkan route baru ke tumpukan navigator yang memungkinkan pengguna untuk kembali ke route sebelumnya.
+  - Contoh: Aplikasi yang memiliki daftar produk, ketika ingin melihat detail dari sebuah produk kita dapat menggunakan Navigator.push() untuk menavigasi ke halaman detail produk.
+- Navigator.pushReplacement() dapat digunakan untuk menggantikan route saat ini dengan route baru pada tumpukan navigator. Method ini berguna jika pengguna tidak bisa kembali ke route sebelumnya.
+  - Contoh:  Setelah pengguna berhasil login, Anda mungkin tidak ingin mereka kembali ke halaman login lagi dengan menekan tombol back.
 
 ### Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
+- Container: Digunakan untuk mendekorasi child widget-nya dengan warna, border, margin, dan padding. Juga dapat digunakan untuk transformasi geometrik.
+- Column & Row: Digunakan untuk layout dalam bentuk vertikal (Column) atau horizontal (Row). Baik Column maupun Row dapat memiliki beberapa child widgets.
+- Align & Center: Digunakan untuk menentukan posisi widget-nya dalam parent widget. Center akan menengahkan child di dalamnya.
+- Padding: Memberikan padding pada child widget-nya, yaitu memberikan spasi tambahan di sekitar widget.
+- Wrap: Mirip dengan Row atau Column tetapi bisa otomatis beralih ke baris atau kolom berikutnya jika tidak ada ruang.
+- Stack: Memungkinkan widget untuk ditumpuk di atas satu sama lain. Berguna untuk posisi widget di atas widget lainnya, seperti latar belakang dengan teks di atasnya.
+- ListView: Digunakan untuk membuat daftar scrollable yang dapat menampung banyak children.
+- GridView: Layout dalam bentuk grid yang scrollable, berguna untuk menampilkan banyak data dalam bentuk grid.
+- Table: Menata widgets dalam format tabel dengan baris dan kolom yang tetap.
+- Flow: Memberikan kontrol penataan yang lebih kompleks, bisa membuat layout yang tidak bisa dibuat dengan Row atau Column.
+- ConstrainedBox & SizedBox: Digunakan untuk membatasi ukuran widget child, bisa secara spesifik atau dengan batasan tertentu.
 
 ### Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
+Saya menggunakan TextFormField, alasan saya menggunakan ini karena TextFromField dapat digunakan untuk menerima input form dan dapat digunakan untuk menghandle submisi dan validasi input.
 
 ### Bagaimana penerapan clean architecture pada aplikasi Flutter?
+Penerapan clean architecture pada aplikasi Flutter bertujuan untuk memisahkan kode menjadi lapisan-lapisan yang tidak tergantung secara langsung satu sama lain, sehingga memudahkan dalam pengujian, pemeliharaan, dan skalabilitas aplikasi. Berikut ini adalah lapisan-lapisan umum dalam clean architecture yang bisa diaplikasikan pada Flutter:
+
+- Presentation Layer: Menyimpan semua kode yang berhubungan dengan UI
+- Domain Layer: Lapisan inti yang menentukan bisnis logika aplikasi
+- Data Layer: Mengimplementasikan Repository Interfaces yang didefinisikan di domain layer
+- Infrastructure Layer (opsional): Ekstensi dari data layer
 
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
+1. Membuat minimal satu halaman baru pada aplikasi, yaitu halaman formulir tambah item baru dengan ketentuan sebagai berikut:
+  - Membuat file `inventorylist_form.dart` pada direktori lib.
+2. Memakai minimal tiga elemen input, yaitu name, amount, description. Tambahkan elemen input sesuai dengan model pada aplikasi tugas Django yang telah kamu buat.
+  - Edit class _ShopFormPageState di file shoplist_form.dart dan tambahkan elemen-elemen yang dibutuhkan (name, amount, description, dan price.)
+3. Memiliki sebuah tombol Save
+  - Edit bagian return Scaffold(...) pada file inventorylist.dart agar dapat menyimpan data setelah inputform divalidasi.
+4. Validasi semua input dengan menggunakan kode berikut
+  - Input tidak boleh kosong
+  ```
+  validator: (String? value) {
+    if (value == null || value.isEmpty) {
+        return "Nama tidak boleh kosong!";
+    }
+    return null;
+  },
+  ```
+  - Input sesuai dengan atribut modelenya
+  ```
+  validator: (String? value) {
+    if (value == null || value.isEmpty) {
+        return "Amount tidak boleh kosong!";
+    }
+    if (int.tryParse(value) == null) {
+        return "Amount harus berupa angka!";
+    }
+    return null;
+  },
+  ```
+5. Mengarahkan pengguna ke halaman form tambah item baru ketika menekan tombol Tambah Item pada halaman utama.
+  - Tambah drawer di main.dart
+  - Tambahkan navigator di shop_card.dart
+
+6. Memunculkan data sesuai isi dari formulir yang diisi dalam sebuah pop-up setelah menekan tombol Save pada halaman formulir tambah item baru.
+  - Edit class _ShopFormPageState di shoplist_form.dart dan menambahkan showDialog di onPressed 
+7. Membuat sebuah drawer pada aplikasi dengan ketentuan sebagai berikut:
+  - Drawer minimal memiliki dua buah opsi, yaitu Halaman Utama dan Tambah Item. Edit class LeftDrawer di left_drawer.dart dan tambahkan dua ListTile untuk halaman utama dan tambah item.
+  - Ketika memiih opsi Halaman Utama, maka aplikasi akan mengarahkan pengguna ke halaman utama. Edit class LeftDrawer di left_drawer.dart
+  - Ketika memiih opsi (Tambah Item), maka aplikasi akan mengarahkan pengguna ke halaman form tambah item baru. Edit class LeftDrawer di left_drawer.dart

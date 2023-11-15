@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:madanshop/shoplist_form.dart';
+import 'package:madanshop/screens/inventorylist_form.dart';
 import 'package:madanshop/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
