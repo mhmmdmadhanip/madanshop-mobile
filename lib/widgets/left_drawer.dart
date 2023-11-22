@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:madanshop/screens/list_item.dart';
 import 'package:madanshop/screens/menu.dart';
 import 'package:madanshop/screens/inventorylist_form.dart';
+
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -50,7 +52,7 @@ class LeftDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
-            title: const Text('Tambah Produk'),
+            title: const Text('Tambah Item'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
               Navigator.pushReplacement(
@@ -60,6 +62,17 @@ class LeftDrawer extends StatelessWidget {
                 ));
             },
           ),
+          ListTile(
+    leading: const Icon(Icons.shopping_basket),
+    title: const Text('Daftar Item'),
+    onTap: () {
+        // Route menu ke halaman produk
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProductPage()),
+        );
+    },
+),
         ],
       ),
     );

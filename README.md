@@ -237,3 +237,75 @@ Penerapan clean architecture pada aplikasi Flutter bertujuan untuk memisahkan ko
   - Drawer minimal memiliki dua buah opsi, yaitu Halaman Utama dan Tambah Item. Edit class LeftDrawer di left_drawer.dart dan tambahkan dua ListTile untuk halaman utama dan tambah item.
   - Ketika memiih opsi Halaman Utama, maka aplikasi akan mengarahkan pengguna ke halaman utama. Edit class LeftDrawer di left_drawer.dart
   - Ketika memiih opsi (Tambah Item), maka aplikasi akan mengarahkan pengguna ke halaman form tambah item baru. Edit class LeftDrawer di left_drawer.dart
+
+## Jawaban Soal Tugas 9
+
+### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Kita bisa melakukannya dengan menggunakan Map<String, dynamic> untuk menangani data JSON secara langsung. Pengambilan data JSON tanpa model memberikan fleksibilitas karena kita tidak perlu mendefinisikan struktur data terlebih dahulu. Hal ini berguna untuk prototyping cepat atau ketika berinteraksi dengan API yang sering berubah. Developer juga tidak perlu menulis kode tambahan untuk serialisasi dan deserialisasi data, yang bisa menghemat waktu pengembangan.
+
+### Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+Fungsi dari CookieRequest adalah untuk menyimpan dan mengelola data sesi pengguna, seperti token autentikasi atau preferensi pengguna. Hal ini sangat penting dalam aplikasi yang membutuhkan pemeliharaan sesi pengguna.
+
+Alasan mengapa sebuah instance CookieRequest perlu dibagikan ke semua komponen dalam aplikasi adalah untuk menjaga konsistensi sesi pengguna di seluruh aplikasi. Ini memastikan bahwa setiap komponen aplikasi dapat mengakses dan memanfaatkan data sesi yang sama. Misalnya, jika pengguna telah masuk (login), cookie yang memuat token autentikasi harus dapat diakses oleh semua komponen yang memerlukan verifikasi autentikasi, sehingga pengguna tidak perlu masuk berulang kali saat berpindah antar fitur aplikasi.
+
+### Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+  1. Membuat model kustom Manfaatkan website Quicktype untuk membuat data JSON yang didapat dari endpoint /json pada tugas Django.
+  2. Menambahkan dependensi HTTP Pada proyek Flutter, tambahkan dependensi http dan tambahkan kode <uses-permission android:name="android.permission.INTERNET" /> pada android/app/src/main/AndroidManifest.xml untuk memperbolehkan akses internet.
+  3. Melakukan Fetch Data Pada salah satu file lib/screens yang ingin melakukan fetch data, implementasi fungsi asinkronus dan mengirim permintaan HTTP.
+  4. Untuk menampilkan data di Flutter, kita menggunakan berbagai widget yang disediakan oleh Flutter. Dalam tugas ini, saya menggunakan ListView.builder untuk menampilkan daftar item
+
+### Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+  1. Pengguna memasukkan data akun yaitu username dan password pada laman LoginPage.
+  2. Tombol login ditekan dan fungsi login pada CookieRequest terpanggil yang mengirimkan HTTP request dengan endpoint URL proyek Django.
+  3. Pada Django, dilakukan autentikasi seperti user = authenticate(username=username, password=password) pada views.py milik authentication.
+  4. Setelah itu dicek, apakah user is not None dan user.is_active:?
+  5. Kembali ke Flutter, jika request.loggedIn, pengguna diarahkan ke MyHomePage dan muncul tampilan selamat datang menggunakan SnackBar.
+
+### Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+- Scaffold: Widget ini digunakan sebagai kerangka dasar untuk layout halaman di Flutter. Ini menyediakan struktur dasar seperti appBar, body, dan lainnya.
+
+- AppBar: Widget ini digunakan untuk menampilkan app bar di bagian atas layar. Di dalamnya, Kita menampilkan judul halaman yang diambil dari data item.
+
+- Form: Widget ini digunakan untuk membuat formulir yang dapat diisi oleh pengguna. Ini membantu dalam validasi dan pengelolaan data formulir.
+
+- IconButton: Widget ini digunakan untuk menampilkan tombol ikon di app bar. Dalam kasus ini, Kita menggunakan ikon panah kembali (Icons.arrow_back) yang, ketika ditekan, akan memicu fungsi untuk kembali ke halaman sebelumnya (Navigator.pop(context)).
+
+- Padding: Widget ini digunakan untuk memberikan padding di sekitar konten lainnya, dalam hal ini di sekitar kolom yang menampilkan detail produk.
+
+- Column: Widget ini digunakan untuk menata beberapa widget lainnya secara vertikal. Ini digunakan untuk menampilkan informasi detail produk.
+
+- Text: Widget ini digunakan untuk menampilkan teks di layar. Dalam hal ini, digunakan untuk menampilkan berbagai atribut dari item, seperti nama, jumlah, harga, deskripsi, dan kategori
+
+- TextFormField: Widget ini digunakan untuk menerima input teks dari pengguna. Setiap TextFormField dikonfigurasi dengan dekorasi, validator, dan fungsi onChanged.
+
+- ElevatedButton: Widget ini digunakan untuk membuat tombol yang, ketika ditekan, akan menjalankan fungsi yang diberikan. Dalam kasus ini, tombol digunakan untuk mengirim data formulir ke server
+
+- Align: Widget ini digunakan untuk mengatur posisi widget anaknya, dalam hal ini digunakan untuk menempatkan tombol di bagian bawah
+
+- SingleChildScrollView: Widget ini memungkinkan pengguna untuk menggulir melalui konten yang mungkin tidak muat di layar
+
+- FutureBuilder: Widget ini digunakan untuk membangun UI berdasarkan hasil dari Future. Dalam kasus ini, digunakan untuk membangun UI setelah data dari fetchItem() diperoleh
+
+- ListView.builder: Widget ini digunakan untuk membuat daftar item yang dapat digulir. Ini membangun item daftar secara dinamis berdasarkan data yang diperoleh
+
+- InkWell: Widget ini digunakan untuk menangani ketukan pada item daftar. Ketika item ditekan, ia akan menavigasi ke DetailProductPage dengan data item yang relevan
+
+- Container: Widget ini digunakan untuk mengelompokkan dan memberikan margin, padding, dan tata letak lainnya pada item daftar
+
+- SizedBox: Widget ini digunakan untuk memberikan jarak antar widget dalam Column.
+
+- ShopCard: Widget ini adalah widget kustom, digunakan untuk menampilkan kartu untuk setiap item dalam grid. Setiap ShopCard mewakili sebuah item dalam aplikasi
+
+- LeftDrawer: Widget adalah widget kustom, digunakan untuk menampilkan menu drawer di sisi kiri layar.
+
+- Drawer: Widget ini digunakan untuk membuat menu drawer yang dapat ditarik dari sisi layar. Ini memberikan navigasi tambahan dalam aplikasi
+
+- ListView: Widget ini digunakan untuk membuat daftar item yang dapat discroll. Dalam konteks ini, digunakan untuk menampilkan item-item dalam drawer.
+
+- ListTile: Widget ini digunakan untuk membuat item yang dapat diklik di dalam ListView. Dalam hal ini, digunakan untuk membuat item navigasi di drawer
+
+- Icon: Widget ini digunakan untuk menampilkan ikon di samping teks dalam ListTile
+
+- Material: Widget ini digunakan sebagai dasar untuk menampilkan komponen UI yang mengikuti Material Design. Di sini, digunakan untuk memberikan warna latar belakang pada kartu
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
